@@ -37,8 +37,8 @@ class CardProduct extends HTMLElement {
                 <section class="cards">
                     <div class="section-img">
                         <p>NIKE</p>
-                        <img src="${this.imgUrl}">    
-                    </div>        
+                        <img src="${this.imgUrl}">
+                    </div>
                     <div class="section-text">
                         <p class="title">${this.title}</p>
                         <p class="subtitle">${this.subtitle}</p>
@@ -76,7 +76,7 @@ class CardProduct extends HTMLElement {
                     left: 10%;
                     bottom: 50%;
                     color: rgba(0,0,0,.5)
-                    
+
                 }
                 .cards .section-img img{
                     width: 100%;
@@ -127,10 +127,13 @@ class CardProduct extends HTMLElement {
                     transition: .5s;
                 }
                 @media only screen and (min-width: 1024px ){
+
                     .cards{
                         flex-wrap: nowrap;
                         width: 90%;
-                        height: 60vh;
+                        height:430px;
+                        max-height: 352px;
+
                     }
                     .cards .section-img{
                         width: 50%;
