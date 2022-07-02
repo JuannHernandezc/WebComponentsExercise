@@ -1,171 +1,165 @@
-class CardProduct extends HTMLElement{
-    constructor(){
-        super();
-        this.attachShadow({mode: 'open'});
-        this.imgUrl = this.getAttribute('imgUrl');
-        this.title = this.getAttribute('title');
-        this.subtitle = this.getAttribute('subtitle');
-        this.mainText = this.getAttribute('mainText');
-        this.price = this.getAttribute('price');
+class CardProduct extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.imgUrl = this.getAttribute("imgUrl");
+    this.title = this.getAttribute("title");
+    this.subtitle = this.getAttribute("subtitle");
+    this.mainText = this.getAttribute("mainText");
+    this.price = this.getAttribute("price");
+  }
 
+  static get observedAttribute() {
+    return ["imgUrl", "title", "subtitle", "mainText", "price"];
+  }
+
+  attributeChangedCallback(attr, oldVal, newVal) {
+    if (attr === "imgUrl") {
+      this.imgUrl = newVal;
     }
-
-    static get observedAttribute() {
-        return['imgUrl','title','subtitle','mainText','price'];
+    if (attr === "title") {
+      this.title = newVal;
     }
-
-    attributeChangedCallback(attr, oldVal, newVal){
-        if(attr === 'imgUrl'){
-            this.imgUrl = newVal;
-        }
-        if(attr === 'title'){
-            this.title = newVal;
-        }
-        if(attr === 'subtitle'){
-            this.subtitle = newVal;
-        }
-        if(attr === 'mainText'){
-            this.mainText = newVal;
-        }
-        if(attr === 'price'){
-            this.price = newVal;
-        }
+    if (attr === "subtitle") {
+      this.subtitle = newVal;
     }
+    if (attr === "mainText") {
+      this.mainText = newVal;
+    }
+    if (attr === "price") {
+      this.price = newVal;
+    }
+  }
 
-    getTemplate(){
-        const template = document.createElement('template');
-        template.innerHTML = `
-            <main class="container-main">
+  getTemplate() {
+    const template = document.createElement("template");
+    template.innerHTML = `
                 <section class="cards">
-                    <div class="card">
-                        <div class="card__section-img">
-                            <p>NIKE</p>
-                            <img src="${this.imgUrl}">    
-                        </div>
-                        <div class="card__section-text">
-                            <p class="title">${this.title}</p>
-                            <p class="subtitle">${this.subtitle}</p>
-                            <p class="text">${this.mainText}</p>
+                    <div class="section-img">
+                        <p>NIKE</p>
+                        <img src="${this.imgUrl}">    
+                    </div>        
+                    <div class="section-text">
+                        <p class="title">${this.title}</p>
+                        <p class="subtitle">${this.subtitle}</p>
+                        <p class="text">${this.mainText}</p>
+                        <div class="container-buy">
                             <p class="price">${this.price}</p>
                             <button>Buy</button>
                         </div>
                     </div>
-                   
                 </section>
-            </main>
             ${this.getStyles()}
         `;
-        return template;
-    }
+    return template;
+  }
 
-    getStyles(){
-        return`
+  getStyles() {
+    return `
             <style>
                 .cards{
-                    align-items:center;
-                    background-color: #293f96;
                     display: flex;
-                    flex-direction: column;
-                    height: 100vh;
-                    justify-content:center;
-                    width: 100%;
-                }
-                .card{
-                    background-color: violet;
-                    box-shadow: 2px 2px 5px 1px black;
-                    display: flex;
-                    margin-top: 2rem;
-                    margin-bottom: 2rem;
-                    flex-direction: column;
+                    margin: 2rem auto;
+                    flex-wrap: wrap;
                     width: 80%;
+                    max-width: 932px;
                 }
-                .card__section-img{
-                    align-items:center;
+                .cards .section-img{
                     background-color: #5a6cb2;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content:center;
+                    position: relative;
+                    width:100%;
                 }
-                .card__section-img p{
-                    color: #293f96;
+                .cards .section-img p{
+                    position: absolute;
                     font-size: 2rem;
                     font-weight: bold;
-                    margin: 0;   
+                    left: 10%;
+                    bottom: 50%;
+                    color: rgba(0,0,0,.5)
+                    
+                }
+                .cards .section-img img{
+                    width: 100%;
+                    position: relative;
+                    top: 35px;
+                }
+                .section-text{
+                    background-color: white;
+                    position: relative;
+                }
+                .section-text .title{
+                    margin: 2rem 1rem 1rem 1rem;
+                    font-size: 1.3rem;
+                    font-weight: bold;
+                }
+                .section-text .subtitle{
+                    margin: .5rem 1rem;
+                    font-size: .8rem;
+                    font-weight: bold;
+                    color: gray;
+                }
+                .section-text .text{
+                    margin: 1rem 1rem 1rem 4rem;
+                    font-size: .8rem;
+                }
+
+                .container-buy{
+                    display: flex;
+                    justify-content: space-between;
                     padding: 1rem;
                 }
-                .card__section-img img{
-                    padding: 2rem;
-                    width: 80%;
-                }
-                .card__section-text{
-                    align-items:center;
-                    background-color: white;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content:center;
-                }
-                .title{
-                    font-size: 2.5rem;
-                    margin:1rem;
-                }
-                .subtitle{
-                    color: rgba(59,59,59,0.85);
-                    font-size: 1.8rem;
-                    margin:1rem;
-                    text-align:center;
-                }
-                .text{
-                    font-size: 1.2rem;
-                    margin:1rem;
-                }
-                .price{
-                    color: rgba(59,59,59,0.85);
-                    font-size: 2rem;
+
+                .container-buy .price{
+                    margin:0;
                     font-weight: bold;
-                    margin:1rem;
+                    font-size: 1.2rem;
+                    color: gray;
                 }
-                button{
-                    background-color: #55ad75;
-                    border:none;
-                    border-radius: 2rem;
-                    margin: 2rem;
-                    padding: 1rem 2rem;
-                    width: 80%;
+                .container-buy button{
+                    background-color: #5a6cb2;
+                    border: none;
+                    border-radius: .5rem;
+                    font-weight: bold;
                 }
-                button:hover{
+                .container-buy button:hover{
                     transform: scale(1.1,1.1);
-                    transition:.5s;
+                    cursor: pointer;
+                    transition: .5s;
                 }
-                @media screen and (max-width: 1024px){
-                    .card{
-                        max-width: 614px;
+                @media only screen and (min-width: 1024px ){
+                    .cards{
+                        flex-wrap: nowrap;
+                        width: 90%;
+                        height: 60vh;
                     }
-                }
-                @media screen and (min-width: 1024px){
-                    .card{
-                        flex-direction: row;
+                    .cards .section-img{
+                        width: 50%;
                     }
-                    .card__section-img img{
-                        width: 100%;
-                        padding: 0;
-                        position: relative;
-                        left: 30px;
+                    .cards .section-img p{
+                        font-size: 4rem;
+                    }
+                    .cards .section-img img{
+                        width: 110%;
+                        max-width: 612px;
+                        max-height: 548px;
                         transform: rotate(-30deg);
+                        left: -5 %;
+                        z-index: 100;
                     }
-                    .text{
-                        padding-left: 3rem;
+                    .section-text{
+                        width: 50%;
                     }
                 }
             </style>
         `;
-    }
+  }
 
-    render(){
-        this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
-    }
+  render() {
+    this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
+  }
 
-    connectedCallback(){
-        this.render();
-    }
+  connectedCallback() {
+    this.render();
+  }
 }
-customElements.define('card-product', CardProduct);
+customElements.define("card-product", CardProduct);
